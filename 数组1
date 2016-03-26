@@ -1,0 +1,47 @@
+//动态规划求最大连续子数组和
+#include<iostream>
+using namespace std;
+int FindGreatestSumOfSubArray(int arry[], int len, int c[])
+{
+	c[0] = arry[0];
+	int start, end;//记录开始位和结束位
+	int temp = 0;
+	int maxGreatSum = -100;//设置一个相当小的值来保证接下来计算。
+	for (int i = 1; i<len; i++)
+	{
+		if (c[i - 1] <= 0)
+		{
+			c[i] = arry[i];
+			temp = i;//记录位置i
+		}
+		else
+			c[i] = arry[i] + c[i - 1];
+		if (c[i]>maxGreatSum)//
+		{
+			maxGreatSum = c[i];
+			start = temp;//开始位
+			end = i;//结束位
+		}
+	}
+	//输出c[i]和最大子序列位置
+	for (int i = 0; i<len; i++)
+		cout << c[i] << " ";
+	cout << endl;
+
+	cout << "最大子序列位置:" << start << "--" << end << endl;
+	return maxGreatSum;
+}
+//控制输入输出，调用函数FindGreatestSumOfSubArray完成结果输出
+int main()
+{
+	int i,n;
+	int A[50] = {};
+	int B[50] = {};
+	cout << "请输入数组中数的个数："<<endl;
+	cin >> n;
+	cout << "请依次输入数组中的数："<< endl;
+	for (i = 0; i != n; ++i)
+		cin >> A[i];
+	FindGreatestSumOfSubArray(A, n,B);
+
+}
